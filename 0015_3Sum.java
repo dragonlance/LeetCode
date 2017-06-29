@@ -1,3 +1,10 @@
+/*
+解题思路
+1. 通过一层外循环，把 3Sum 问题，转化为 2Sum 问题，用左右双指针求 2Sum 的和
+2. 先排序，然后借助有序的性质，后期可以去重
+3. 左右双指针，从当前数字的下一次数字开始
+*/
+
 public class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
 
@@ -11,6 +18,7 @@ public class Solution {
             if (i != 0 && nums[i] == nums[i - 1]) continue;//跳过重复项，来到重复项的最后一项
 
             int sum = target - nums[i];//求出其他两个数字所需要的和，然后在内循环中，寻找和为这个sum的两个数
+            // 左右双指针，从当前数字的下一次数字开始
             int left = i + 1;//采取的策略是，用左右两边两个指针往中间夹
             int right = nums.length - 1;//和大了，就又指针左移一位；和小了，就左指针右移一位
 
@@ -25,7 +33,7 @@ public class Solution {
                     subList.add(nums[left]);
                     subList.add(nums[right]);
                     */
-                    
+
                     list.add(subList);//往大List里添加一个子List
 
                     while (left < right && nums[left] == nums[left + 1]) left++;//去重
