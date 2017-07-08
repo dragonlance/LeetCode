@@ -45,6 +45,36 @@ public class BSTIterator {
     }
 }
 
+public class BSTIterator2 {
+
+    private List<TreeNode> list = new ArrayList<>();
+    private int index = 0;
+
+    public BSTIterator(TreeNode root) {
+       addToList(root);
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return index < list.size();
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        TreeNode node = list.get(index);
+        index++;
+        return node.val;
+    }
+
+    // 一开始先按照in-order中序遍历，把所有的节点存进一个数组里(数组用ArrayList,有助于后边按照index取值)
+    // 这时数组里存的值，已经是从小到大存好的，只需维护一个index取值就行了
+    private void addToList(TreeNode root) {
+        if (root == null) return;
+        addToList(root.left);
+        list.add(root);
+        addToList(root.right);
+    }
+}
 /**
  * Your BSTIterator will be called like this:
  * BSTIterator i = new BSTIterator(root);
