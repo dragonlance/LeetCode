@@ -54,3 +54,70 @@ public class Solution {
         return list;
     }
 }
+
+
+public class Solution2 {
+    public List<List<Integer>> threeSum(int[] nums) {
+
+        //List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        List<List<Integer>> ans = new LinkedList<>(); // 泛型<>里可以留空
+
+        if (nums == null || nums.length < 3) return ans;
+
+        Arrays.sort(nums); // 先排序，目的是为了后面的双指针夹击查询
+
+        int SUM = 0; // 这个值可以替换
+
+        for (int i = 0; i < nums.length - 2; i++) { // 修改1 : i < nums.length - 2
+
+            if (i > 0 && nums[i] == nums[i - 1]) continue; // 修改2 ： 跳过重复之. 逻辑应该是遇见能干的先干，然后碰到重复的跳过
+            // if (nums[i] == nums[i + 1]) continue; // 这种写法不对，如果全部数组都一样，那么将永远跳过去
+
+            int target = SUM - nums[i];
+
+            int left = i + 1;               // left指针从i右起第一个开始
+            int right = nums.length - 1;    // right指针从末尾开始
+
+            while (left < right) {
+                if (nums[left] + nums[right] < target) {
+                    left++;
+                } else if (nums[left] + nums[right] > target) {
+                    right--;
+                } else {
+                    // 传统写法
+                    List<Integer> list = new LinkedList<>();
+                    list.add(nums[i]);
+                    list.add(nums[left]);
+                    list.add(nums[right]);
+
+                    // 特殊写法 Arrays.asList(...)
+                    // list = Arrays.asList(nums[i], nums[left], nums[right]);
+
+                    ans.add(list);
+
+                    /* 下面的写法虽然很合适，但是不符合自己的习惯
+                    do {
+                        left++;
+                    } while (left < right && nums[left] == nums[left - 1]);
+
+                    do {
+                        right--;
+                    } while (left < right && nums[right] == nums[right + 1]);
+                    */
+
+                    // 反正就是，先把本来就该做的left++, right--做了，然后再跳过重复的，就像上面的do while一样
+                    left++;
+                    right--;
+                    while (left < right && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+}
