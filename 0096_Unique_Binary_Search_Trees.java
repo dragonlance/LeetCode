@@ -13,6 +13,7 @@
 
 public class Solution {
     public int numTrees(int n) {
+        // dp模版套路
         int[] dp = new int[n + 1];
 
         dp[0] = 1;
@@ -28,7 +29,6 @@ public class Solution {
                 dp[i] += tmp;
             }
         }
-
         return dp[n];
     }
 }

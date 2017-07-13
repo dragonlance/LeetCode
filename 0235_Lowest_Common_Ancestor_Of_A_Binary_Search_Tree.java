@@ -27,8 +27,36 @@ public class Solution1 {
     }
 }
 
-// recursive
+// iterative 2
 public class Solution2 {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q） {
+
+    while (true) {
+        if (p.val < root.val && q.val < root.val) {
+            root = root.left;
+        } else if (p.val > root.val && q.val > root.val) {
+            root = root.right;
+        } else {
+            return root;
+        }
+    }
+
+    /*
+    这种写法是错的
+    原因：p,q两个节点，随着root节点往下走，有可能这一次是都在root节点的左边，下一次又变成了都在root节点的右边。这种写法，是先过一遍左，再过一遍右，加入了不必要的先左后右的强制顺序
+    while (p.val < root.val && q.val < root.val) {
+	    root = root.left;
+    }
+    while (p.val > root.val && q.val > root.val) {
+	    root = root.right;
+    }
+    return root;
+    */
+    }
+}
+
+// recursive
+public class Solution3 {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if ((p.val - root.val) * (q.val - root.val) > 0) {
             root = lowestCommonAncestor(p.val < root.val ? root.left : root.right, p, q);
@@ -37,8 +65,8 @@ public class Solution2 {
     }
 }
 
-// recursive
-public class Solution3 {
+// recursive 2
+public class Solution4 {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (p.val < root.val && q.val < root.val) {
             return lowestCommonAncestor(root.left, p, q);
